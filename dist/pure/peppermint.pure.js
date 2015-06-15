@@ -1,6 +1,6 @@
 /*!
  * Peppermint touch slider
- * v. 1.3.7 | https://github.com/wilddeer/Peppermint
+ * v. 1.3.8 | https://github.com/wilddeer/Peppermint
  * Copyright Oleg Korsunsky | http://wd.dizaina.net/
  *
  * Depends on Event Burrito | https://github.com/wilddeer/Event-Burrito
@@ -38,7 +38,8 @@ function Peppermint(_this, options) {
         dotsContainer: undefined,
         slidesContainer: undefined,
         onSlideChange: undefined, //slide change callback
-        onSetup: undefined //setup callback
+        onSetup: undefined, //setup callback
+        onWidthChange: undefined //width change callback
     };
 
     //merge user options into defaults
@@ -251,6 +252,11 @@ function Peppermint(_this, options) {
             slider.slides[i].style.width = slider.width+'px';
         }
         changePos(-activeSlide*slider.width);
+
+        //API callback, timeout to expose the API first
+        setTimeout(function() {
+            o.onWidthChange && o.onWidthChange(activeSlide);
+        }, 0);
     }
 
     function addEvent(el, event, func, bool) {
